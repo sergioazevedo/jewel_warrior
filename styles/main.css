@@ -4,10 +4,11 @@ body {
 
 #game {
   position: absolute;
+  font-size: 40px;
   left: 0;
   top: 0;
-  width: 320px;
-  height: 480px;
+  width: 8em;
+  height: 12em;
   background-color: rgb(30,30,30);
   font-family: Geo;
   color: rgb(200,200,100);
@@ -37,14 +38,14 @@ body {
 
 .logo{
   font-family: Slackey;
-  font-size: 60px;
-  line-height: 60px;
-  margin: 0 0 20px 0;
+  font-size: 1.5em;
+  line-height: 1.1em;
+  margin: 0 0 0.5em 0;
   text-align: center;
   color: rgb(70,120,20);
-  text-shadow: 1px 1px 2px rgb(255,255,0),
-              -1px -1px 2px rgb(255,255,0),
-               5px 8px 8px rgb(255,0,0)
+  text-shadow: 0.03em 0.03em 0.03em rgb(255,255,0),
+               0.03em 0.03em 0.03em rgb(255,255,0),
+               0.15em 0.15em 0.15em rgb(255,0,0)
 }
 
 .no-textshadow .logo {
