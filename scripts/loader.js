@@ -1,4 +1,6 @@
-var jewel = {};
+var jewel = {
+  screens : {}
+};
 
 window.addEventListener("load", function(){
   //starts the dynamic loading
@@ -7,7 +9,8 @@ window.addEventListener("load", function(){
     load : [
       "scripts/sizzle.js",
       "scripts/dom.js",
-      "scripts/game.js"
+      "scripts/game.js",
+      "scripts/screen.splash.js"
     ],
     complete : function(){
       jewel.game.showScreen("splash-screen");
