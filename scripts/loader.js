@@ -39,7 +39,7 @@ window.addEventListener("load", function(){
     }
   }
   ]);
-
+  //loading stage 2
   if(Modernizr.standalone){
     Modernizr.load([
     {
