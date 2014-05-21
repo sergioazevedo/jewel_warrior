@@ -29,7 +29,7 @@ jewel.board = (function(){
     for(x = 0; x < cols; x++){
       jewels[x] = [];
       for(y = 0; y < rows; y++){
-        jewels[x][y] = getADifferentJewelTypeOfMyNeighbords(myRow, myCol);
+        jewels[x][y] = getADifferentJewelTypeOfMyNeighbords(x, y);
       }
     }
   }
@@ -60,11 +60,11 @@ jewel.board = (function(){
   }
 
   function isValidColumn(col){
-    return ( col > 0 && col < cols-1 );
+    return ( col >= 0 && col <= cols-1 );
   }
 
   function isValidRow(row){
-    return ( row > 0 && row < rows-1 );
+    return ( row >= 0 && row <= rows-1 );
   }
 
   function randomJewel(){
