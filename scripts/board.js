@@ -155,7 +155,8 @@ jewel.board = (function(){
   return{
     /* exposed function go here */
     initialize : initialize,
-    print : print
+    print : print,
+    canSwap: canSwap
   };
 
 })();
