@@ -8,6 +8,7 @@ jewel.board = (function(){
     baseScore = settings.baseScore;
     cols = settings.cols;
     rows = settings.rows;
+    minSizeOfChain = 2;
     fillBoard();
     callback();
   }
@@ -118,6 +119,37 @@ jewel.board = (function(){
       qty++;
     }
     return qty;
+  }
+
+  function canSwap(col1, row1, col2, row2){
+    if ( !isAdjacent(col1, row1, col2, row2) ){
+      return false;
+    }
+
+    swapJewels(col1, row1, col2, row2);
+    result = AnyOfTheGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChain);
+    swapJewels(col1, row1, col2, row2);
+
+    return result;
+  }
+
+  function isAdjacent(col1, row1, col2, row2){
+    var dx, dy;
+    dx = Math.abs(col1 - col2);
+    dy = Math.abs(row1 - row2);
+    return (dx + dy === 1);
+  }
+
+  function AnyOfTheGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChain){
+    return getQtyOfJewelsFromTheLongestNeighbordChain(col1, row1) > minSizeOfChain || getQtyOfJewelsFromTheLongestNeighbordChain(col2, row2) > minSizeOfChain;
+  }
+
+  function swapJewels(col1, row1, col2, row2){
+    jewelType1 = getJewel(col1, row1);
+    jewelType2 = getJewel(col2, row2);
+
+    jewels[col1][row1] = jewelType2;
+    jewels[col2][row2] = jewelType1;
   }
 
   return{
