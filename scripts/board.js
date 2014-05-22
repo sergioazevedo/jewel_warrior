@@ -127,7 +127,7 @@ jewel.board = (function(){
     }
 
     swapJewels(col1, row1, col2, row2);
-    result = AnyOfTheGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChain);
+    result = AnyOfTheChangedGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChain);
     swapJewels(col1, row1, col2, row2);
 
     return result;
@@ -140,7 +140,7 @@ jewel.board = (function(){
     return (dx + dy === 1);
   }
 
-  function AnyOfTheGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChain){
+  function AnyOfTheChangedGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChain){
     return getQtyOfJewelsFromTheLongestNeighbordChain(col1, row1) > minSizeOfChain || getQtyOfJewelsFromTheLongestNeighbordChain(col2, row2) > minSizeOfChain;
   }
 
