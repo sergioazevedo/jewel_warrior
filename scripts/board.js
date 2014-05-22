@@ -71,6 +71,55 @@ jewel.board = (function(){
     return Math.floor(Math.random() * numJewelTypes);
   }
 
+  //return the number of jewels in the longest chain
+  function getQtyOfJewelsFromTheLongestNeighbordChain(col, row){
+    var type  = getJewel(col, row);
+    var right = getQtyOfJewelsFromRigthNeighbordChain(type, col, row);
+    var left  = getQtyOfJewelsFromLeftNeighbordChain(type, col, row);
+    var up    = getQtyOfJewelsFromUpperNeighbordChain(type, col, row);
+    var down  = getQtyOfJewelsFromLowerNeighbordChain(type, col, row);
+    var totalVerticalJewels = left + 1 + right;
+    var totalHorizontalJewels = up + 1 + down;
+
+    return Math.max( totalVerticalJewels, totalHorizontalJewels);
+  }
+
+  function getQtyOfJewelsFromRigthNeighbordChain(jewelType, col, row){
+    var qty = 0;
+    var nextCol = col + 1;
+    while( jewelType === getJewel(nextCol + qty, row) ){
+      qty++;
+    }
+    return qty;
+  }
+
+  function getQtyOfJewelsFromLeftNeighbordChain(jewelType, col, row){
+    var qty = 0;
+    var nextCol = col - 1;
+    while( jewelType === getJewel(nextCol - qty, row) ){
+      qty++;
+    }
+    return qty;
+  }
+
+  function getQtyOfJewelsFromUpperNeighbordChain(jewelType, col, row){
+    var qty = 0;
+    var nextRow = row + 1;
+    while( jewelType === getJewel(col, nextRow + qty) ){
+      qty++;
+    }
+    return qty;
+  }
+
+  function getQtyOfJewelsFromLowerNeighbordChain(jewelType, col, row){
+    var qty = 0;
+    var nextRow = row - 1;
+    while( jewelType === getJewel(col, nextRow - qty) ){
+      qty++;
+    }
+    return qty;
+  }
+
   return{
     /* exposed function go here */
     initialize : initialize,
