@@ -174,7 +174,24 @@ jewel.board = (function() {
 
         for (var x = 0; x < cols; x++) {
             gapsPerColumn[x] = 0;
-            tryRemoveOrMoveJewelsFromColumn(x, gapsPerColumn)
+            tryRemoveOrMoveJewelsFromColumn(x, gapsPerColumn);
+            addNewJewelsToFillGaps(x, gapsPerColumn[x])
+        }
+    }
+
+    function addNewJewelsToFillGaps(column, numberOfGaps) {
+        for (var row = 0; row < numberOfGaps; row++) {
+            jewelType = randomJewel();
+
+            markAsMoved({
+                toX: x,
+                toY: y,
+                fromX: x,
+                fromY: y - numberOfGaps,
+                type: jewelType
+            });
+
+            jewels[column][row] = jewelType;
         }
     }
 
@@ -187,7 +204,6 @@ jewel.board = (function() {
                 moveJewelDownToFitGap(column, row, gaps[column]);
             }
         }
-
     }
 
     function markJewelAsRemoved(col, row) {
@@ -198,13 +214,19 @@ jewel.board = (function() {
         });
     }
 
+    function markAsMoved(data) {
+        moved.push(data);
+    }
+
     function moveJewelDownToFitGap(x, y, verticalGap) {
         obj = {
             toX: x,
             toY: y + verticalGap,
+            fromX: x,
+            fromY: y,
             type: getJewel(x, y)
         };
-        moved.push(obj);
+        markAsMoved(obj);
         jewels[x][obj.toY] = obj.type;
     }
 
