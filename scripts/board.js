@@ -136,15 +136,16 @@ jewel.board = (function() {
     }
 
     function canSwap(col1, row1, col2, row2) {
-        if (!isAdjacent(col1, row1, col2, row2)) {
+        if (!isValidColumn(col1) || !isValidRow(row1) || !isValidColumn(col2) || !isValidRow(row2)) {
             return false;
+        } else if (!isAdjacent(col1, row1, col2, row2)) {
+            return false;
+        } else {
+            moveJewelsFromTo(col1, row1, col2, row2);
+            result = AnyOfTheChangedGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChainToSwap);
+            moveJewelsFromTo(col1, row1, col2, row2);
+            return result;
         }
-
-        moveJewelsFromTo(col1, row1, col2, row2);
-        result = AnyOfTheChangedGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChainToSwap);
-        moveJewelsFromTo(col1, row1, col2, row2);
-
-        return result;
     }
 
     function moveJewelsFromTo(col1, row1, col2, row2) {
@@ -191,12 +192,20 @@ jewel.board = (function() {
     function hasAvailableMoves() {
         for (var column = 0; column < cols; column++) {
             for (var row = 0; row < rows; row++) {
-                if (getQtyOfJewelsFromTheLongestNeighbordChain(column, row) > minSizeOfChainToSwap) {
+                if (canJewelMove(column, row)) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    function canJewelMove(column, row) {
+        canSwapRigth = canSwap(column, row, column + 1, row);
+        canSwapLeft = canSwap(column, row, column - 1, row);
+        canSwapTop = canSwap(column, row, column, row + 1);
+        canSwapBottom = canSwap(column, row, column, row - 1);
+        return (canSwapRigth || canSwapLeft || canSwapBottom || canSwapTop);
     }
 
     function processChains(events) {
