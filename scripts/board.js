@@ -10,6 +10,7 @@ jewel.board = (function() {
         baseScore = settings.baseScore;
         cols = settings.cols;
         rows = settings.rows;
+        minSizeOfChainToScore = 3;
         fillBoard();
         callback();
     }
@@ -200,10 +201,16 @@ jewel.board = (function() {
             if (chainMap[column][row] > 2) {
                 gaps[column]++;
                 markJewelAsRemoved(column, row);
+                updateScore(chainMap[column][row]);
             } else if (gaps[column] > 0) {
                 moveJewelDownToFitGap(column, row, gaps[column]);
             }
         }
+    }
+
+    function updateScore(chainSize) {
+        qtyOfExtraJewelsInTheChain = chainSize - minSizeOfChainToScore;
+        score += baseScore * Math.pow(2, qtyOfExtraJewelsInTheChain);
     }
 
     function markJewelAsRemoved(col, row) {
