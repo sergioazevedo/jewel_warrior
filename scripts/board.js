@@ -160,7 +160,7 @@ jewel.board = (function() {
         if (canSwap(col1, row1, col2, row2)) {
             moveJewelsFromTo(col1, row1, col2, row2);
             boardEvents = processChains();
-            callback(events);
+            callback(boardEvents);
         } else {
             callback(false);
         }
@@ -215,11 +215,11 @@ jewel.board = (function() {
 
         removed = [];
         moved = [];
-        events = events || {};
+        events = events || [];
 
         for (var x = 0; x < cols; x++) {
             gapsPerColumn[x] = 0;
-            tryRemoveOrMoveJewelsFromColumn(chainMap, x, gapsPerColumn);
+            tryRemoveOrMoveJewelsFromColumn(chainMap, x, gapsPerColumn, score);
             addNewJewelsToFillGaps(x, gapsPerColumn[x]);
         }
 
@@ -268,10 +268,10 @@ jewel.board = (function() {
             jewelType = randomJewel();
 
             markAsMoved({
-                toX: x,
-                toY: y,
-                fromX: x,
-                fromY: y - numberOfGaps,
+                toX: column,
+                toY: row,
+                fromX: column,
+                fromY: row - numberOfGaps,
                 type: jewelType
             });
 
@@ -279,19 +279,19 @@ jewel.board = (function() {
         }
     }
 
-    function tryRemoveOrMoveJewelsFromColumn(chainMap, column, gaps) {
+    function tryRemoveOrMoveJewelsFromColumn(chainMap, column, gaps, score) {
         for (var row = rows; row >= 0; row--) {
             if (chainMap[column][row] > 2) {
                 gaps[column]++;
                 markJewelAsRemoved(column, row);
-                updateScore(chainMap[column][row]);
+                updateScore(chainMap[column][row], score);
             } else if (gaps[column] > 0) {
                 moveJewelDownToFitGap(column, row, gaps[column]);
             }
         }
     }
 
-    function updateScore(chainSize) {
+    function updateScore(chainSize, score) {
         qtyOfExtraJewelsInTheChain = chainSize - minSizeOfChainToScore;
         score += baseScore * Math.pow(2, qtyOfExtraJewelsInTheChain);
     }
@@ -300,7 +300,7 @@ jewel.board = (function() {
         removed.push({
             x: col,
             y: row,
-            type: getJewel(x, y)
+            type: getJewel(col, row)
         });
     }
 
@@ -308,16 +308,16 @@ jewel.board = (function() {
         moved.push(data);
     }
 
-    function moveJewelDownToFitGap(x, y, verticalGap) {
+    function moveJewelDownToFitGap(col, row, verticalGap) {
         obj = {
-            toX: x,
-            toY: y + verticalGap,
-            fromX: x,
-            fromY: y,
-            type: getJewel(x, y)
+            toX: col,
+            toY: row + verticalGap,
+            fromX: col,
+            fromY: row,
+            type: getJewel(col, row)
         };
         markAsMoved(obj);
-        jewels[x][obj.toY] = obj.type;
+        jewels[col][obj.toY] = obj.type;
     }
 
     return {
