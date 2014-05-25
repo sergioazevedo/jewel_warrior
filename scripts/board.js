@@ -140,11 +140,19 @@ jewel.board = (function() {
             return false;
         }
 
-        swapJewels(col1, row1, col2, row2);
+        moveJewelsFromTo(col1, row1, col2, row2);
         result = AnyOfTheChangedGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChainToSwap);
-        swapJewels(col1, row1, col2, row2);
+        moveJewelsFromTo(col1, row1, col2, row2);
 
         return result;
+    }
+
+    function moveJewelsFromTo(col1, row1, col2, row2) {
+        jewelType1 = getJewel(col1, row1);
+        jewelType2 = getJewel(col2, row2);
+
+        jewels[col1][row1] = jewelType2;
+        jewels[col2][row2] = jewelType1;
     }
 
     function isAdjacent(col1, row1, col2, row2) {
@@ -156,14 +164,6 @@ jewel.board = (function() {
 
     function AnyOfTheChangedGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChain) {
         return getQtyOfJewelsFromTheLongestNeighbordChain(col1, row1) > minSizeOfChain || getQtyOfJewelsFromTheLongestNeighbordChain(col2, row2) > minSizeOfChain;
-    }
-
-    function swapJewels(col1, row1, col2, row2) {
-        jewelType1 = getJewel(col1, row1);
-        jewelType2 = getJewel(col2, row2);
-
-        jewels[col1][row1] = jewelType2;
-        jewels[col2][row2] = jewelType1;
     }
 
     function getBoardChainLengthMap() {
