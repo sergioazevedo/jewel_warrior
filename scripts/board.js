@@ -166,6 +166,17 @@ jewel.board = (function() {
         return map;
     }
 
+    function hasAvailableMoves() {
+        for (var column = 0; column < cols; column++) {
+            for (var row = 0; row < rows; row++) {
+                if (getQtyOfJewelsFromTheLongestNeighbordChain(column, row) > minSizeOfChainToSwap) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     function processChains(events) {
         var score = 0;
         var gapsPerColumn = [];
