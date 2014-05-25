@@ -152,6 +152,20 @@ jewel.board = (function(){
     jewels[col2][row2] = jewelType1;
   }
 
+  function getBoardChainLengthMap(){
+    var currentCol, currentRow;
+    var map = [];
+    for (currentCol = 0; currentCol < cols; currentCol++) {
+      map[currentCol] = [];
+      for (currentRow = 0; currentRow < rows; currentRow++) {
+        map[currentCol][currentRow] = getQtyOfJewelsFromTheLongestNeighbordChain(currentCol, currentRow);
+      };
+    }
+    return map;
+  }
+
+
+
   return{
     /* exposed function go here */
     initialize : initialize,
