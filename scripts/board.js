@@ -155,6 +155,16 @@ jewel.board = (function() {
         jewels[col2][row2] = jewelType1;
     }
 
+    function doSwap(col1, row1, col2, row2, callback) {
+        if (canSwap(col1, row1, col2, row2)) {
+            moveJewelsFromTo(col1, row1, col2, row2);
+            boardEvents = processChains();
+            callback(events);
+        } else {
+            callback(false);
+        }
+    }
+
     function isAdjacent(col1, row1, col2, row2) {
         var dx, dy;
         dx = Math.abs(col1 - col2);
@@ -306,8 +316,7 @@ jewel.board = (function() {
         initialize: initialize,
         print: print,
         canSwap: canSwap,
-        swap: swapJewels,
-        check: getBoardChainLengthMap,
+        swap: doSwap,
         getBoard: getBoard
     };
 })();
