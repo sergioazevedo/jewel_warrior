@@ -202,6 +202,7 @@ jewel.board = (function() {
 
         if (removed.length > 0) {
             addProcessChainsEventLogToEvents(events, removed, score, moved);
+            checkIfThereAreAvailableMovesInTheBoardForThePlayer(events);
             return processChains(events);
         } else {
             return events;
@@ -219,6 +220,24 @@ jewel.board = (function() {
             type: "move",
             data: moved
         });
+    }
+
+    function checkIfThereAreAvailableMovesInTheBoardForThePlayer(events) {
+        if (!hasAvailableMoves()) {
+            fillBoard();
+            events.push({
+                type: "refill",
+                data: getBoard()
+            });
+        }
+    }
+
+    function getBoard() {
+        var copy = [];
+        for (var column = 0; column < cols; column++) {
+            copy[column] = jewels[column].slice(0);
+        }
+        return copy;
     }
 
     function addNewJewelsToFillGaps(column, numberOfGaps) {
@@ -284,6 +303,7 @@ jewel.board = (function() {
         print: print,
         canSwap: canSwap,
         swap: swapJewels,
-        check: getBoardChainLengthMap
+        check: getBoardChainLengthMap,
+        getBoard: getBoard
     };
 })();
