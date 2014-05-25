@@ -167,22 +167,24 @@ jewel.board = (function() {
 
     function processChains() {
         var chainMap = getBoardChainLengthMap();
-        var hadChains = false,
-            score = 0,
-            rowGaps = [];
+        var score = 0,
+            gapsPerColumn = [];
         removed = [];
         moved = [];
 
         for (var x = 0; x < cols; x++) {
-            rowGaps[x] = 0;
-            for (var y = rows; y >= 0; y--) {
-                if (chainMap[x][y] > 2) {
-                    hadChains = true;
-                    rowGaps[x]++;
-                    markJewelAsRemoved(x, y);
-                } else if (rowGaps[x] > 0) {
-                    moveJewelDownToFitGap(x, y, rowGaps[x]);
-                }
+            gapsPerColumn[x] = 0;
+            tryRemoveOrMoveJewelsFromColumn(x, gapsPerColumn)
+        }
+    }
+
+    function tryRemoveOrMoveJewelsFromColumn(column, gaps) {
+        for (var row = rows; row >= 0; row--) {
+            if (chainMap[column][row] > 2) {
+                gaps[column]++;
+                markJewelAsRemoved(column, row);
+            } else if (gaps[column] > 0) {
+                moveJewelDownToFitGap(column, row, gaps[column]);
             }
         }
 
