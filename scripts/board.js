@@ -89,36 +89,44 @@ jewel.board = (function() {
 
     function getQtyOfJewelsFromRigthNeighbordChain(jewelType, col, row) {
         var qty = 0;
-        var nextCol = col + 1;
-        while (jewelType === getJewel(nextCol + qty, row)) {
-            qty++;
+        if (isValidColumn(col) && isValidRow(row)) {
+            var nextCol = col + 1;
+            while (jewelType === getJewel(nextCol + qty, row)) {
+                qty++;
+            }
         }
         return qty;
     }
 
     function getQtyOfJewelsFromLeftNeighbordChain(jewelType, col, row) {
         var qty = 0;
-        var nextCol = col - 1;
-        while (jewelType === getJewel(nextCol - qty, row)) {
-            qty++;
+        if (isValidColumn(col) && isValidRow(row)) {
+            var nextCol = col - 1;
+            while (jewelType === getJewel(nextCol - qty, row)) {
+                qty++;
+            }
         }
         return qty;
     }
 
     function getQtyOfJewelsFromUpperNeighbordChain(jewelType, col, row) {
         var qty = 0;
-        var nextRow = row + 1;
-        while (jewelType === getJewel(col, nextRow + qty)) {
-            qty++;
+        if (isValidColumn(col) && isValidRow(row)) {
+            var nextRow = row + 1;
+            while (jewelType === getJewel(col, nextRow + qty)) {
+                qty++;
+            }
         }
         return qty;
     }
 
     function getQtyOfJewelsFromLowerNeighbordChain(jewelType, col, row) {
         var qty = 0;
-        var nextRow = row - 1;
-        while (jewelType === getJewel(col, nextRow - qty)) {
-            qty++;
+        if (isValidColumn(col) && isValidRow(row)) {
+            var nextRow = row - 1;
+            while (jewelType === getJewel(col, nextRow - qty)) {
+                qty++;
+            }
         }
         return qty;
     }
