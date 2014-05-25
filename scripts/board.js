@@ -166,18 +166,40 @@ jewel.board = (function() {
         return map;
     }
 
-    function processChains() {
+    function processChains(events) {
         var score = 0;
         var gapsPerColumn = [];
         var chainMap = getBoardChainLengthMap();
+
         removed = [];
         moved = [];
+        events = events || {};
 
         for (var x = 0; x < cols; x++) {
             gapsPerColumn[x] = 0;
             tryRemoveOrMoveJewelsFromColumn(chainMap, x, gapsPerColumn);
             addNewJewelsToFillGaps(x, gapsPerColumn[x]);
         }
+
+        if (removed.length > 0) {
+            addProcessChainsEventLogToEvents(events, removed, score, moved);
+            return processChains(events);
+        } else {
+            return events;
+        }
+    }
+
+    function addProcessChainsEventLogToEvents(events, removed, score, moved) {
+        events.push({
+            type: "remove",
+            data: removed
+        }, {
+            type: "score",
+            data: score
+        }, {
+            type: "move",
+            data: moved
+        });
     }
 
     function addNewJewelsToFillGaps(column, numberOfGaps) {
