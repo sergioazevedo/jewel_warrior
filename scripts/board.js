@@ -1,6 +1,6 @@
 jewel.board = (function() {
     /* game function go here */
-    var settings, jewels, cols, rows, baseScore, numJewelTypes;
+    var settings, jewels, cols, rows, baseScore, numJewelTypes, minSizeOfChainToSwap, minSizeOfChainToScore;
     var removed = [],
         moved = [];
 
@@ -11,6 +11,7 @@ jewel.board = (function() {
         cols = settings.cols;
         rows = settings.rows;
         minSizeOfChainToScore = 3;
+        minSizeOfChainToSwap = 2;
         fillBoard();
         callback();
     }
@@ -123,14 +124,13 @@ jewel.board = (function() {
     }
 
     function canSwap(col1, row1, col2, row2) {
-        var minSizeOfChain = 2;
         if (!isAdjacent(col1, row1, col2, row2)) {
             return false;
         }
 
         swapJewels(col1, row1, col2, row2);
-        result = AnyOfTheChangedGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChain);
-        swapJewels(col2, row2, col1, row1);
+        result = AnyOfTheChangedGemsHasAChainGreatherThan(col1, row1, col2, row2, minSizeOfChainToSwap);
+        swapJewels(col1, row1, col2, row2);
 
         return result;
     }
