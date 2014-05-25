@@ -174,8 +174,8 @@ jewel.board = (function() {
 
         for (var x = 0; x < cols; x++) {
             gapsPerColumn[x] = 0;
-            addNewJewelsToFillGaps(x, gapsPerColumn[x])
             tryRemoveOrMoveJewelsFromColumn(chainMap, x, gapsPerColumn);
+            addNewJewelsToFillGaps(x, gapsPerColumn[x]);
         }
     }
 
