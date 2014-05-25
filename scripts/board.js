@@ -36,6 +36,10 @@ jewel.board = (function() {
                 jewels[x][y] = getADifferentJewelTypeOfMyNeighbords(x, y);
             }
         }
+
+        if (!hasAvailableMoves()) {
+            fillBoard();
+        }
     }
 
     function getADifferentJewelTypeOfMyNeighbords(col, row) {
