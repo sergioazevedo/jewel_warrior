@@ -10,7 +10,6 @@ jewel.board = (function() {
         baseScore = settings.baseScore;
         cols = settings.cols;
         rows = settings.rows;
-        minSizeOfChain = 2;
         fillBoard();
         callback();
     }
@@ -123,6 +122,7 @@ jewel.board = (function() {
     }
 
     function canSwap(col1, row1, col2, row2) {
+        var minSizeOfChain = 2;
         if (!isAdjacent(col1, row1, col2, row2)) {
             return false;
         }
