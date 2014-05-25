@@ -166,9 +166,9 @@ jewel.board = (function() {
     }
 
     function processChains() {
+        var score = 0;
+        var gapsPerColumn = [];
         var chainMap = getBoardChainLengthMap();
-        var score = 0,
-            gapsPerColumn = [];
         removed = [];
         moved = [];
 
